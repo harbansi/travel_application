@@ -32,6 +32,9 @@ dependencies:
   firebase_auth: 1.0.1
   flutter_signin_button: ^2.0.0
   firebase_core : ^1.0.1
+  google_sign_in: ^4.5.9
+  cached_network_image: ^3.0.0
+  font_awesome_flutter: ^9.0.0
 
 
 dev_dependencies:
@@ -53,6 +56,8 @@ flutter:
   assets:
     - images/home_page.jpg
     - images/login.png
+    - images/abd.png
+    - images/vadodara.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

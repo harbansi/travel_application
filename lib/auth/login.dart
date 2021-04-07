@@ -1,11 +1,10 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
-import 'homePage.dart';
+import 'package:travel_application/components/navigation.dart';
+import 'package:travel_application/auth/signUp.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -22,7 +21,7 @@ class _LoginState extends State<Login> {
     _auth.authStateChanges().listen((user) {
       if (user != null) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => Navigation()));
       }
     });
   }
@@ -63,6 +62,10 @@ class _LoginState extends State<Login> {
             ],
           );
         });
+  }
+
+  navigateToSignUp() async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
   }
 
   @override
@@ -114,7 +117,7 @@ class _LoginState extends State<Login> {
                         onSaved: (input) => _password = input),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 20,
                   ),
                   Container(
                     alignment: Alignment(1.0, 0.0),
@@ -122,8 +125,9 @@ class _LoginState extends State<Login> {
                       child: Text(
                         'Forgot Password',
                         style: TextStyle(
-                            color: Color(0xff3ea09f),
+                            color: Color(0xff007580),
                             fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
                             decoration: TextDecoration.underline),
                       ),
                     ),
@@ -146,10 +150,39 @@ class _LoginState extends State<Login> {
                       borderRadius: BorderRadius.circular(50),
                     ),
                   ),
+                  SizedBox(
+                    height: 50.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'New User??',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17.0),
+                      ),
+                      SizedBox(
+                        width: 8.0,
+                      ),
+                      InkWell(
+                        onTap: navigateToSignUp,
+                        child: Text(
+                          'Register',
+                          style: TextStyle(
+                              color: Color(0xff007580),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17.0,
+                              decoration: TextDecoration.underline),
+                        ),
+                      )
+                    ],
+                  ),
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

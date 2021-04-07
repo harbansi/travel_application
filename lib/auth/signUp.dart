@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:travel_application/auth/homePage.dart';
+import 'package:travel_application/auth/login.dart';
+import 'package:travel_application/screen/homeScreen.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class _SignUpState extends State<SignUp> {
     _auth.authStateChanges().listen((user) {
       if (user != null) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
       }
     });
   }
@@ -69,6 +70,10 @@ class _SignUpState extends State<SignUp> {
         });
   }
 
+  navigateToSignIn() async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,6 +104,7 @@ class _SignUpState extends State<SignUp> {
                         },
                         decoration: InputDecoration(
                           labelText: 'Username',
+                          focusColor: Color(0xff007580),
                           prefixIcon: Icon(Icons.person),
                         ),
                         onSaved: (input) => _username = input),
@@ -110,6 +116,7 @@ class _SignUpState extends State<SignUp> {
                         },
                         decoration: InputDecoration(
                           labelText: 'Email',
+                          focusColor: Color(0xff007580),
                           prefixIcon: Icon(Icons.email),
                         ),
                         onSaved: (input) => _email = input),
@@ -124,6 +131,7 @@ class _SignUpState extends State<SignUp> {
                         },
                         decoration: InputDecoration(
                             labelText: 'Password',
+                            focusColor: Color(0xff007580),
                             prefixIcon: Icon(Icons.lock_rounded)),
                         obscureText: true,
                         onSaved: (input) => _password = input),
@@ -145,6 +153,35 @@ class _SignUpState extends State<SignUp> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),
                     ),
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Already Have Account??',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17.0),
+                      ),
+                      SizedBox(
+                        width: 8.0,
+                      ),
+                      InkWell(
+                        onTap: navigateToSignIn,
+                        child: Text(
+                          'LogIn',
+                          style: TextStyle(
+                              color: Color(0xff007580),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17.0,
+                              decoration: TextDecoration.underline),
+                        ),
+                      )
+                    ],
                   ),
                 ],
               ),

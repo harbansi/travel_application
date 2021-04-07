@@ -51,7 +51,7 @@ class _StartState extends State<Start> {
                       style: TextStyle(
                         fontSize: 43,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xff3ea09f),
+                        color: Color(0xff007580),
                       ),
                     ),
                   ],
