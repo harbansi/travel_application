@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:travel_application/auth/login.dart';
 import 'package:travel_application/auth/signUp.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:travel_application/components/navigation.dart';
 
 class Start extends StatefulWidget {
   @override
@@ -9,6 +12,34 @@ class Start extends StatefulWidget {
 }
 
 class _StartState extends State<Start> {
+  //google sign in authentication
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<UserCredential> googleSignIn() async {
+    GoogleSignIn googleSignIn = GoogleSignIn();
+    GoogleSignInAccount googleUser = await googleSignIn.signIn();
+    if (googleUser != null) {
+      GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      if (googleAuth.idToken != null && googleAuth.accessToken != null) {
+        final AuthCredential credential = GoogleAuthProvider.credential(
+            accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+
+        final UserCredential user =
+            await _auth.signInWithCredential(credential);
+
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Navigation()));
+
+        return user;
+      } else {
+        throw StateError('Missing Google Auth Token');
+      }
+    } else
+      throw StateError('Sign in Aborted');
+  }
+
   navigateToLogin() async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
   }
@@ -134,7 +165,7 @@ class _StartState extends State<Start> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    onPressed: () {},
+                    onPressed: googleSignIn,
                   )
                 ],
               ),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:firebase_core/firebase_core.dart';
-
 import 'package:travel_application/components/navigation.dart';
 import 'package:travel_application/auth/signUp.dart';
 
@@ -40,12 +38,12 @@ class _LoginState extends State<Login> {
         UserCredential userCredential = await _auth.signInWithEmailAndPassword(
             email: _email.trim(), password: _password);
       } catch (e) {
-        showError(e.errormessage);
+        showError(e.message);
+        print(e);
       }
     }
   }
 
-  //error function
   showError(String errormessage) {
     showDialog(
         context: context,
@@ -54,7 +52,7 @@ class _LoginState extends State<Login> {
             title: Text('ERROR'),
             content: Text(errormessage),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
