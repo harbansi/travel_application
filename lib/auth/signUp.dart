@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:travel_application/auth/login.dart';
 import 'package:travel_application/screen/homeScreen.dart';
+import 'package:travel_application/components/navigation.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class _SignUpState extends State<SignUp> {
     _auth.authStateChanges().listen((user) {
       if (user != null) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+            context, MaterialPageRoute(builder: (context) => Navigation()));
       }
     });
   }

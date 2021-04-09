@@ -6,6 +6,7 @@ import 'package:travel_application/components/app_bar.dart';
 import 'package:travel_application/components/drawer.dart';
 import 'package:travel_application/screen/homeScreen.dart';
 import 'package:travel_application/screen/bookmark.dart';
+import 'package:travel_application/screen/user.dart';
 
 class Navigation extends StatefulWidget {
   @override
@@ -22,7 +23,7 @@ class _NavigationState extends State<Navigation> {
     Bookmark(),
     Center(child: Text("Blogs")),
     Center(child: Text("Map")),
-    Center(child: Text("User")),
+    UserPage(),
   ];
 
   void _setIndex(int index) {

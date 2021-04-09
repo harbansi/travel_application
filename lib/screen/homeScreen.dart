@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:travel_application/data/data.dart';
 import 'package:travel_application/model/city_model.dart';
@@ -42,13 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
         this.isloggedIn = true;
       });
     }
-  }
-
-  signOut() async {
-    _auth.signOut();
-
-    final googleSignIn = GoogleSignIn();
-    await googleSignIn.signOut();
   }
 
   //for app data
@@ -93,19 +85,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(
               height: 16,
-            ),
-            RaisedButton(
-              padding: EdgeInsets.fromLTRB(70, 10, 70, 10),
-              onPressed: signOut,
-              child: Text('Signout',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold)),
-              color: Colors.orange,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
             ),
             Container(
               height: 200,
