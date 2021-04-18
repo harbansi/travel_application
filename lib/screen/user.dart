@@ -68,6 +68,7 @@ class _UserPageState extends State<UserPage> {
           ),
           SizedBox(height: 20),
           Container(
+            // ignore: deprecated_member_use
             child: FlatButton(
               padding: EdgeInsets.all(20),
               shape: RoundedRectangleBorder(
@@ -90,6 +91,7 @@ class _UserPageState extends State<UserPage> {
             height: 20,
           ),
           Container(
+            // ignore: deprecated_member_use
             child: FlatButton(
               padding: EdgeInsets.all(20),
               shape: RoundedRectangleBorder(
@@ -112,6 +114,7 @@ class _UserPageState extends State<UserPage> {
             height: 20,
           ),
           Container(
+            // ignore: deprecated_member_use
             child: FlatButton(
               padding: EdgeInsets.all(20),
               shape: RoundedRectangleBorder(
@@ -134,6 +137,7 @@ class _UserPageState extends State<UserPage> {
             height: 20,
           ),
           Container(
+            // ignore: deprecated_member_use
             child: FlatButton(
               padding: EdgeInsets.all(20),
               shape: RoundedRectangleBorder(
@@ -156,6 +160,7 @@ class _UserPageState extends State<UserPage> {
             height: 20,
           ),
           Container(
+            // ignore: deprecated_member_use
             child: FlatButton(
               padding: EdgeInsets.all(20),
               shape: RoundedRectangleBorder(

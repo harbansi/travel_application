@@ -6,7 +6,6 @@ Widget appBar() {
     title: Center(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
-        child: Text('Home'),
       ),
     ),
     actions: [

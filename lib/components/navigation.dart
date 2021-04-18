@@ -1,12 +1,13 @@
 // ignore: avoid_web_libraries_in_flutter
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:travel_application/components/app_bar.dart';
 import 'package:travel_application/components/drawer.dart';
 import 'package:travel_application/screen/homeScreen.dart';
 import 'package:travel_application/screen/bookmark.dart';
 import 'package:travel_application/screen/user.dart';
+import 'package:travel_application/screen/map.dart';
 
 class Navigation extends StatefulWidget {
   @override
@@ -22,7 +23,7 @@ class _NavigationState extends State<Navigation> {
     HomeScreen(),
     Bookmark(),
     Center(child: Text("Blogs")),
-    Center(child: Text("Map")),
+    MapView(),
     UserPage(),
   ];
 

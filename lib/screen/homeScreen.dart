@@ -182,7 +182,7 @@ class PopularTours extends StatelessWidget {
                   height: 3,
                 ),
                 Container(
-                  width: 175,
+                  width: 200,
                   child: Text(
                     desc,
                     maxLines: 2,
@@ -196,15 +196,16 @@ class PopularTours extends StatelessWidget {
               ],
             ),
           ),
+          Spacer(),
           Column(
             children: [
               Container(
-                  margin: EdgeInsets.only(bottom: 1, left: 2),
+                  margin: EdgeInsets.only(bottom: 2, left: 2, right: 14),
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      color: Colors.teal[400]),
-                  child: Column(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Color(0xff007580)),
+                  child: Row(
                     children: [
                       Text(
                         "$rating",
@@ -215,7 +216,7 @@ class PopularTours extends StatelessWidget {
                             fontSize: 12),
                       ),
                       SizedBox(
-                        height: 3,
+                        width: 5,
                       ),
                       Icon(
                         CupertinoIcons.star,
@@ -259,90 +260,57 @@ class FeaturedPlaceList extends StatelessWidget {
           ),
           Container(
             height: 240,
-            width: 150,
+            width: 170,
             child: Column(
               children: [
-                Row(children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 167, left: 8),
-                    //padding: EdgeInsets.only(top: 210),
-                    child: Text(name,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16)),
-                  ),
-                  SizedBox(height: 8),
-                  Spacer(),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 130,
-                      right: 4,
+                Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(top: 164, left: 6),
+                      //padding: EdgeInsets.only(top: 210),
+                      child: Text(name,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16)),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        backgroundBlendMode: BlendMode.colorDodge,
-                        color: Colors.white60),
-                    child: Column(
-                      children: [
-                        Text(rating.toString(),
+                    Spacer(),
+                    Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(
+                        top: 162,
+                        right: 4,
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          backgroundBlendMode: BlendMode.colorDodge,
+                          color: Colors.white60),
+                      child: Row(
+                        children: [
+                          Text(
+                            rating.toString(),
                             style: TextStyle(
                                 color: Colors.black87,
                                 fontWeight: FontWeight.w800,
-                                fontSize: 16)),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Icon(
-                          CupertinoIcons.star,
-                          color: Colors.black54,
-                          size: 20,
-                        ),
-                      ],
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            width: 3,
+                          ),
+                          Icon(
+                            CupertinoIcons.star,
+                            color: Colors.black54,
+                            size: 14,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ]),
+                  ],
+                ),
               ],
             ),
           )
-        ],
-      ),
-    );
-  }
-}
-
-class BottomNavigation extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Waycreast"),
-      ),
-      body: Container(),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.home),
-              // ignore: deprecated_member_use
-              title: Text("Home"),
-              backgroundColor: Colors.blue),
-          BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.bookmark),
-              // ignore: deprecated_member_use
-              title: Text("Bookmark"),
-              backgroundColor: Colors.blue),
-          BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.airplane),
-              // ignore: deprecated_member_use
-              title: Text("blog"),
-              backgroundColor: Colors.blue),
-          BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.map_pin_ellipse),
-              // ignore: deprecated_member_use
-              title: Text("Maps"),
-              backgroundColor: Colors.blue),
         ],
       ),
     );

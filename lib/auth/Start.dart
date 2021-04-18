@@ -112,6 +112,7 @@ class _StartState extends State<Start> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    // ignore: deprecated_member_use
                     RaisedButton(
                       padding: EdgeInsets.only(
                           left: 55.0, right: 55.0, top: 10.0, bottom: 10.0),

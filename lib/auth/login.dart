@@ -24,12 +24,6 @@ class _LoginState extends State<Login> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    this.checkAuthentification();
-  }
-
   login() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
@@ -64,6 +58,12 @@ class _LoginState extends State<Login> {
 
   navigateToSignUp() async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.checkAuthentification();
   }
 
   @override
