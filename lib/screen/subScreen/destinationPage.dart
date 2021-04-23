@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_application/components/app_bar.dart';
+import 'package:travel_application/components/direction_list.dart';
+import 'package:travel_application/components/image_swipe.dart';
 import 'package:travel_application/constants.dart';
 
 class DestinationPage extends StatefulWidget {
@@ -31,24 +33,19 @@ class _DestinationPageState extends State<DestinationPage> {
                 );
               }
               if (snapshot.connectionState == ConnectionState.done) {
+                //firebase document data of map
                 Map<String, dynamic> documentData = snapshot.data.data();
+
+                //from map retrive image data into list
+                List imageList = documentData['imgURL'];
+
+                // List directionList = documentData['direction'];
                 return Container(
                   margin: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                   child: ListView(
                     children: [
-                      Container(
-                        height: 300,
-                        decoration: BoxDecoration(
-                            color: Colors.black45.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(8)),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.network(
-                            "${documentData['imgURL'][0]}",
-                            height: 300,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                      ImageSwipe(
+                        imageList: imageList,
                       ),
                       SizedBox(
                         height: 15,
@@ -110,7 +107,76 @@ class _DestinationPageState extends State<DestinationPage> {
                       ),
                       Container(
                         child: Text(documentData['desc']),
-                      )
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.symmetric(vertical: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 20),
+                              height: 130,
+                              width: 185,
+                              decoration: BoxDecoration(
+                                  color: Color(0xff007580),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.bookmark,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "Bookmark",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Spacer(),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 4),
+                              alignment: Alignment.center,
+                              height: 130,
+                              width: 185,
+                              decoration: BoxDecoration(
+                                  color: Color(0xff007580),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "Show Direction",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // DirectionList(
+                      //   directionList: directionList,
+                      // ),
                     ],
                   ),
                 );

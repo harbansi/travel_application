@@ -1,4 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:travel_application/screen/subScreen/destinationPage.dart';
 
 class BeachScreen extends StatefulWidget {
   @override
@@ -6,104 +10,151 @@ class BeachScreen extends StatefulWidget {
 }
 
 class _BeachScreenState extends State<BeachScreen> {
+  final Query desRefBeach = FirebaseFirestore.instance
+      .collection("destination_collection")
+      .where("type", isEqualTo: "beach");
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   backgroundColor: Colors.teal[400],
-    //   body: SafeArea(
-    //     child: Column(
-    //       crossAxisAlignment: CrossAxisAlignment.stretch,
-    //       children: <Widget>[
-    //         SizedBox(
-    //           height: 40,
-    //         ),
-    //         Text(
-    //           'Beaches',
-    //           style: TextStyle(
-    //             fontSize: 25,
-    //             fontWeight: FontWeight.w600,
-    //             color: Colors.white,
-    //           ),
-    //           textAlign: TextAlign.center,
-    //         ),
-    //         SizedBox(
-    //           height: 35,
-    //         ),
-    //         Expanded(
-    //           child: Container(
-    //             padding: EdgeInsets.symmetric(
-    //               horizontal: 20,
-    //               vertical: 30,
-    //             ),
-    //             decoration: BoxDecoration(
-    //               color: Colors.white,
-    //               borderRadius: BorderRadius.only(
-    //                 topLeft: Radius.circular(30),
-    //                 topRight: Radius.circular(30),
-    //               ),
-    //             ),
-    //             child: GridView.builder(
-    //               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-    //                 crossAxisCount: 2,
-    //                 crossAxisSpacing: 15,
-    //                 mainAxisSpacing: 10,
-    //               ),
-    //               itemBuilder: (context, index) {
-    //                 return RawMaterialButton(
-    //                     onPressed: () {
-    //                       Navigator.push(
-    //                         context,
-    //                         MaterialPageRoute(
-    //                           builder: (context) => DetailsPage(
-    //                             imagePath: _images[index].imagePath,
-    //                             title: _images[index].title,
-    //                             rating: _images[index].rating,
-    //                             details: _images[index].details,
-    //                             index: index,
-    //                           ),
-    //                         ),
-    //                       );
-    //                     },
-    //                     child: Column(children: <Widget>[
-    //                       Hero(
-    //                           tag: 'logo$index',
-    //                           child: Container(
-    //                             child: Material(
-    //                               color: Colors.transparent,
-    //                               child: Column(children: <Widget>[
-    //                                 Container(
-    //                                   height: 150,
-    //                                   child: ClipRRect(
-    //                                       borderRadius:
-    //                                           BorderRadius.circular(16),
-    //                                       child: CachedNetworkImage(
-    //                                         imageUrl: _images[index].imagePath,
-    //                                         fit: BoxFit.cover,
-    //                                       )),
-    //                                 ),
-    //                                 Container(
-    //                                   child: Padding(
-    //                                     padding: const EdgeInsets.all(3),
-    //                                     child: Text(_images[index].title,
-    //                                         textAlign: TextAlign.center,
-    //                                         style: TextStyle(
-    //                                             color: Colors.black,
-    //                                             fontSize: 15,
-    //                                             fontWeight: FontWeight.w500)),
-    //                                   ),
-    //                                 )
-    //                               ]),
-    //                             ),
-    //                           ))
-    //                     ]));
-    //               },
-    //               itemCount: _images.length,
-    //             ),
-    //           ),
-    //         )
-    //       ],
-    //     ),
-    //   ),
-    // );
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        child: Stack(
+          children: <Widget>[
+            Container(
+              child: Text(
+                "beaches",
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+
+            //featured palces container
+            FutureBuilder<QuerySnapshot>(
+              future: desRefBeach.get(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Scaffold(
+                    body: Center(
+                      child: Text("Error : ,${snapshot.error}"),
+                    ),
+                  );
+                }
+
+                //collection data ready to display
+
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return ListView(
+                    shrinkWrap: true,
+                    children: snapshot.data.docs.map((document) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DestinationPage(
+                                destinationId: document.id,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          height: 200,
+                          margin: EdgeInsets.only(top: 80, right: 10),
+                          child: Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                //child: Image.asset(imgData,
+                                //"images/abd.png",
+                                child: CachedNetworkImage(
+                                    imageUrl: document.data()['imgURL'][0],
+                                    filterQuality: FilterQuality.low,
+                                    color: Colors.white.withOpacity(0.7),
+                                    colorBlendMode: BlendMode.dst,
+                                    height: 200,
+                                    width: 170,
+                                    fit: BoxFit.cover),
+                              ),
+                              Container(
+                                height: 240,
+                                width: 170,
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: <Widget>[
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              top: 164, left: 6),
+                                          //padding: EdgeInsets.only(top: 210),
+                                          child: Text(
+                                              document.data()['title'] ??
+                                                  "Title",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14)),
+                                        ),
+                                        Spacer(),
+                                        Container(
+                                          alignment: Alignment.center,
+                                          margin: EdgeInsets.only(
+                                            top: 162,
+                                            right: 4,
+                                          ),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 8),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              backgroundBlendMode:
+                                                  BlendMode.colorDodge,
+                                              color: Colors.white60),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                document
+                                                    .data()['rating']
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    color: Colors.black87,
+                                                    fontWeight: FontWeight.w800,
+                                                    fontSize: 12),
+                                              ),
+                                              SizedBox(
+                                                width: 3,
+                                              ),
+                                              Icon(
+                                                CupertinoIcons.star,
+                                                color: Colors.black54,
+                                                size: 14,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  );
+                }
+                return Scaffold(
+                  body: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
