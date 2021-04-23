@@ -77,116 +77,117 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffffffff),
-      resizeToAvoidBottomInset: false,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            alignment: Alignment.center,
-            height: 450.0,
-            padding: EdgeInsets.fromLTRB(20.0, 80.0, 20.0, 30.0),
-            child: Image(
-              image: AssetImage("images/login.png"),
-              fit: BoxFit.contain,
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    child: TextFormField(
-                        validator: (input) {
-                          if (input.isEmpty) return 'Enter Username';
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'Username',
-                          focusColor: Color(0xff007580),
-                          prefixIcon: Icon(Icons.person),
-                        ),
-                        onSaved: (input) => _username = input),
-                  ),
-                  Container(
-                    child: TextFormField(
-                        validator: (input) {
-                          if (input.isEmpty) return 'Enter Email';
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          focusColor: Color(0xff007580),
-                          prefixIcon: Icon(Icons.email),
-                        ),
-                        onSaved: (input) => _email = input),
-                  ),
-                  Container(
-                    child: TextFormField(
-                        validator: (input) {
-                          if (input.isEmpty)
-                            return 'provide Password';
-                          else if (input.length < 6)
-                            return 'Provide minimum 6 letters';
-                        },
-                        decoration: InputDecoration(
-                            labelText: 'Password',
-                            focusColor: Color(0xff007580),
-                            prefixIcon: Icon(Icons.lock_rounded)),
-                        obscureText: true,
-                        onSaved: (input) => _password = input),
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  RaisedButton(
-                    padding: EdgeInsets.fromLTRB(100, 15, 100, 15),
-                    onPressed: signUp,
-                    color: Color(0xff001027),
-                    child: Text(
-                      'SIGNUP',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Color(0xffffe8d0),
-                      ),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Already Have Account??',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17.0),
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      InkWell(
-                        onTap: navigateToSignIn,
-                        child: Text(
-                          'LogIn',
-                          style: TextStyle(
-                              color: Color(0xff007580),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17.0,
-                              decoration: TextDecoration.underline),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              alignment: Alignment.center,
+              height: 450.0,
+              padding: EdgeInsets.fromLTRB(20.0, 80.0, 20.0, 30.0),
+              child: Image(
+                image: AssetImage("images/login.png"),
+                fit: BoxFit.contain,
               ),
             ),
-          )
-        ],
+            Container(
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      child: TextFormField(
+                          validator: (input) {
+                            if (input.isEmpty) return 'Enter Username';
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Username',
+                            focusColor: Color(0xff007580),
+                            prefixIcon: Icon(Icons.person),
+                          ),
+                          onSaved: (input) => _username = input),
+                    ),
+                    Container(
+                      child: TextFormField(
+                          validator: (input) {
+                            if (input.isEmpty) return 'Enter Email';
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            focusColor: Color(0xff007580),
+                            prefixIcon: Icon(Icons.email),
+                          ),
+                          onSaved: (input) => _email = input),
+                    ),
+                    Container(
+                      child: TextFormField(
+                          validator: (input) {
+                            if (input.isEmpty)
+                              return 'provide Password';
+                            else if (input.length < 6)
+                              return 'Provide minimum 6 letters';
+                          },
+                          decoration: InputDecoration(
+                              labelText: 'Password',
+                              focusColor: Color(0xff007580),
+                              prefixIcon: Icon(Icons.lock_rounded)),
+                          obscureText: true,
+                          onSaved: (input) => _password = input),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    RaisedButton(
+                      padding: EdgeInsets.fromLTRB(100, 15, 100, 15),
+                      onPressed: signUp,
+                      color: Color(0xff001027),
+                      child: Text(
+                        'SIGNUP',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Color(0xffffe8d0),
+                        ),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Already Have Account??',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17.0),
+                        ),
+                        SizedBox(
+                          width: 8.0,
+                        ),
+                        InkWell(
+                          onTap: navigateToSignIn,
+                          child: Text(
+                            'LogIn',
+                            style: TextStyle(
+                                color: Color(0xff007580),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17.0,
+                                decoration: TextDecoration.underline),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

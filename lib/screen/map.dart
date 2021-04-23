@@ -5,6 +5,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'dart:math' show cos, sqrt, asin;
 
+import 'package:travel_application/components/app_bar.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -297,7 +299,7 @@ class _MapViewState extends State<MapView> {
       polylineId: id,
       color: Colors.red,
       points: polylineCoordinates,
-      width: 3,
+      width: 5,
     );
     polylines[id] = polyline;
   }

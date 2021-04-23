@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:travel_application/components/app_bar.dart';
 import 'package:travel_application/components/drawer.dart';
+import 'package:travel_application/screen/blog.dart';
 import 'package:travel_application/screen/homeScreen.dart';
 import 'package:travel_application/screen/bookmark.dart';
 import 'package:travel_application/screen/user.dart';
@@ -22,7 +23,7 @@ class _NavigationState extends State<Navigation> {
     // ),
     HomeScreen(),
     Bookmark(),
-    Center(child: Text("Blogs")),
+    BlogPage(),
     MapView(),
     UserPage(),
   ];
@@ -36,8 +37,7 @@ class _NavigationState extends State<Navigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
-      drawer: drawer(),
+      drawer: DrawerScreen(),
       body: IndexedStack(
         index: _selectedIndex,
         children: _widgetOption,
