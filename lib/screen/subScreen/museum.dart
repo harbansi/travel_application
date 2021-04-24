@@ -8,6 +8,6 @@ class MuseumScreen extends StatefulWidget {
 class _MuseumScreenState extends State<MuseumScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold();
   }
 }

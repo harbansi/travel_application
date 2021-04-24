@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_application/components/app_bar.dart';
 import 'package:travel_application/components/direction_list.dart';
 import 'package:travel_application/components/image_swipe.dart';
 import 'package:travel_application/constants.dart';
+import 'package:travel_application/services/firebase_crud.dart';
 
 class DestinationPage extends StatefulWidget {
   final String destinationId;
@@ -14,8 +16,20 @@ class DestinationPage extends StatefulWidget {
 }
 
 class _DestinationPageState extends State<DestinationPage> {
-  final CollectionReference destinationRef1 =
-      FirebaseFirestore.instance.collection("destination_collection");
+  CrudMethods crudMethods = CrudMethods();
+
+  Future addToBokomark() {
+    return crudMethods.userRef
+        .doc(crudMethods.getUserId())
+        .collection("bookmark")
+        .doc(widget.destinationId)
+        .set({"count": 1});
+  }
+
+  final SnackBar _snakbar = SnackBar(
+    content: Text("Successfully added to the bookmark"),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +37,7 @@ class _DestinationPageState extends State<DestinationPage> {
       body: Stack(
         children: <Widget>[
           FutureBuilder(
-            future: destinationRef1.doc(widget.destinationId).get(),
+            future: crudMethods.destinationRef.doc(widget.destinationId).get(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Scaffold(
@@ -39,7 +53,7 @@ class _DestinationPageState extends State<DestinationPage> {
                 //from map retrive image data into list
                 List imageList = documentData['imgURL'];
 
-                // List directionList = documentData['direction'];
+                List directionList = documentData['distance'];
                 return Container(
                   margin: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                   child: ListView(
@@ -54,6 +68,7 @@ class _DestinationPageState extends State<DestinationPage> {
                         child: Row(
                           children: [
                             Container(
+                              width: 200,
                               child: Text("${documentData['title']}",
                                   style: TextStyle(
                                       fontSize: 20,
@@ -114,69 +129,77 @@ class _DestinationPageState extends State<DestinationPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 20),
-                              height: 130,
-                              width: 185,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff007580),
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.bookmark,
-                                    color: Colors.white,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "Bookmark",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                  ),
-                                ],
+                            GestureDetector(
+                              onTap: () async {
+                                await addToBokomark();
+                                Scaffold.of(context).showSnackBar(_snakbar);
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 22),
+                                height: 130,
+                                width: 185,
+                                decoration: BoxDecoration(
+                                    color: Color(0xff007580),
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.bookmark,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Bookmark",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             Spacer(),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 4),
-                              alignment: Alignment.center,
-                              height: 130,
-                              width: 185,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff007580),
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.location_on,
-                                    color: Colors.white,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "Show Direction",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                  ),
-                                ],
+                            GestureDetector(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 4),
+                                alignment: Alignment.center,
+                                height: 130,
+                                width: 185,
+                                decoration: BoxDecoration(
+                                    color: Color(0xff007580),
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.location_on,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Show Direction",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      // DirectionList(
-                      //   directionList: directionList,
-                      // ),
+                      DirectionList(
+                        directionList: directionList,
+                      ),
                     ],
                   ),
                 );

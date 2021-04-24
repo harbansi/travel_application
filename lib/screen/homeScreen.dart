@@ -11,6 +11,7 @@ import 'package:travel_application/components/app_bar.dart';
 import 'package:travel_application/components/drawer.dart';
 import 'package:travel_application/constants.dart';
 import 'package:travel_application/screen/subScreen/destinationPage.dart';
+import 'package:travel_application/services/firebase_crud.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -18,18 +19,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  CrudMethods crudMethods = CrudMethods();
   //for authentication
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool isloggedIn = false;
   User user;
-
-  final Query destinationRef1 = FirebaseFirestore.instance
-      .collection("destination_collection")
-      .where("type", isEqualTo: "featuredList");
-
-  final Query destinationRef2 = FirebaseFirestore.instance
-      .collection("destination_collection")
-      .where("type", isEqualTo: "popularPlaces");
 
   bool _isLoading = true;
 
@@ -45,30 +39,17 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   //check getuser
-  getUser() async {
-    User firebaseUser = _auth.currentUser;
-    await firebaseUser?.reload();
-    firebaseUser = _auth.currentUser;
-
-    if (firebaseUser != null) {
-      setState(() {
-        this.user = firebaseUser;
-        this.isloggedIn = true;
-      });
-    }
-  }
 
   @override
   void initState() {
     super.initState();
     this.checkAuthentification();
-    this.getUser();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar("home page"),
+      appBar: appBar("Home page"),
       drawer: DrawerScreen(),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
@@ -97,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             //featured palces container
             FutureBuilder<QuerySnapshot>(
-              future: destinationRef1.get(),
+              future: crudMethods.desRefFeaturedPlaces.get(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Scaffold(
@@ -234,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               margin: EdgeInsets.only(top: 340),
               child: FutureBuilder<QuerySnapshot>(
-                future: destinationRef2.get(),
+                future: crudMethods.desRefPopularPlaces.get(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Scaffold(

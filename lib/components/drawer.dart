@@ -8,7 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:travel_application/screen/subScreen/heritage.dart';
 import 'package:travel_application/screen/subScreen/wildlife.dart';
 import 'package:travel_application/screen/subScreen/beach.dart';
-import 'package:travel_application/screen/subScreen/montain.dart';
+import 'package:travel_application/screen/subScreen/mountain.dart';
 import 'package:travel_application/screen/subScreen/museum.dart';
 import 'package:travel_application/screen/subScreen/temple.dart';
 
@@ -75,23 +75,16 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     SizedBox(
                       height: 15,
                     ),
-                    Text(
-                      user.displayName.toUpperCase(),
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.teal[900]),
-                    ),
                     SizedBox(
                       height: 15,
                     ),
-                    Text(
-                      user.email,
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.teal[900]),
-                    ),
+                    // Text(
+                    //   user.email ?? "email",
+                    //   style: TextStyle(
+                    //       fontSize: 15,
+                    //       fontWeight: FontWeight.w300,
+                    //       color: Colors.teal[900]),
+                    // ),
                   ],
                 ),
               )),
@@ -102,7 +95,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
             "Pick Your Trail",
             style: TextStyle(
               fontSize: 25,
-              color: Colors.teal[500],
+              color: Color(0xff007580),
               fontWeight: FontWeight.bold,
             ),
           ),

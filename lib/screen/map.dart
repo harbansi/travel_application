@@ -125,6 +125,30 @@ class _MapViewState extends State<MapView> {
     });
   }
 
+  //  _getDestinationLocation() async {
+  //   await _geolocator
+  //       .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+  //       .then((Position position) async {
+  //     setState(() {
+  //       _currentPosition = position;
+  //       print('CURRENT POS: $_currentPosition');
+  //       mapController.animateCamera(
+  //         CameraUpdate.newCameraPosition(
+  //           CameraPosition(
+  //             target: LatLng(position.latitude, position.longitude),
+  //             zoom: 18.0,
+  //           ),
+  //         ),
+  //       );
+  //     });
+  //     await _getAddress();
+  //   }).catchError((e) {
+  //     print(e);
+  //   });
+  // }
+
+  //method to retrive destination location
+
   // Method for retrieving the address
   _getAddress() async {
     try {

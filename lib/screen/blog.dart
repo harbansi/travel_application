@@ -20,7 +20,7 @@ import 'package:travel_application/components/app_bar.dart';
 import 'package:travel_application/components/drawer.dart';
 import 'package:travel_application/screen/subScreen/createBlog.dart';
 import 'package:travel_application/screen/subScreen/showBlog.dart';
-import 'package:travel_application/services/curd.dart';
+import 'package:travel_application/services/firebase_crud.dart';
 import 'package:travel_application/constants.dart';
 
 class BlogPage extends StatefulWidget {

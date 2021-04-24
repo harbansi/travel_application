@@ -8,6 +8,6 @@ class MountainScreen extends StatefulWidget {
 class _MountainScreenState extends State<MountainScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold();
   }
 }

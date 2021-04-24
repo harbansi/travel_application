@@ -9,7 +9,7 @@ import 'package:random_string/random_string.dart';
 
 import 'package:travel_application/components/app_bar.dart';
 import 'package:travel_application/constants.dart';
-import 'package:travel_application/services/curd.dart';
+import 'package:travel_application/services/firebase_crud.dart';
 
 class CreateBlog extends StatefulWidget {
   CreateBlog({Key key}) : super(key: key);

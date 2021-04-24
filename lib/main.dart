@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:travel_application/auth/Start.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:travel_application/screen/abc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

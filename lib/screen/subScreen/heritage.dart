@@ -8,6 +8,6 @@ class HeritageScreen extends StatefulWidget {
 class _HeritageScreenState extends State<HeritageScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold();
   }
 }

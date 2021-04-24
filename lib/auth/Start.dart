@@ -40,12 +40,28 @@ class _StartState extends State<Start> {
       throw StateError('Sign in Aborted');
   }
 
+  checkAuthentification() async {
+    _auth.authStateChanges().listen((user) {
+      if (user != null) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Navigation()));
+      }
+    });
+  }
+
   navigateToLogin() async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
   }
 
   navigateToSignUp() async {
     Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.checkAuthentification();
   }
 
   @override

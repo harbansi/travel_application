@@ -10,13 +10,27 @@ class DirectionList extends StatefulWidget {
 class _DirectionListState extends State<DirectionList> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        for (var i = 0; i < widget.directionList.length; i++)
-          Container(
-            child: Text("${widget.directionList[i]}"),
-          )
-      ],
+    return Container(
+      height: 100,
+      child: Row(
+        children: [
+          for (var i = 0; i < widget.directionList.length; i++)
+            Container(
+              child: Row(
+                children: [
+                  // Text(
+                  //   "Distance from Airpot and railway Station",
+                  //   style: TextStyle(color: Colors.black87, fontSize: 15),
+                  // ),
+                  Text(
+                    "${widget.directionList[i]}",
+                    maxLines: 3,
+                  ),
+                ],
+              ),
+            )
+        ],
+      ),
     );
   }
 }
