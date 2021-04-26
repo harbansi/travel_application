@@ -10,4 +10,7 @@ class constant {
 
   static const boldHeading =
       TextStyle(fontSize: 19, fontWeight: FontWeight.bold, color: Colors.black);
+
+  static const whiteHeading =
+      TextStyle(fontSize: 19, fontWeight: FontWeight.bold, color: Colors.white);
 }

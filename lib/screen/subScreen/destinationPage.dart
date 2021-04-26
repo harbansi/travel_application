@@ -6,6 +6,7 @@ import 'package:travel_application/components/app_bar.dart';
 import 'package:travel_application/components/direction_list.dart';
 import 'package:travel_application/components/image_swipe.dart';
 import 'package:travel_application/constants.dart';
+import 'package:travel_application/screen/map.dart';
 import 'package:travel_application/services/firebase_crud.dart';
 
 class DestinationPage extends StatefulWidget {
@@ -65,6 +66,7 @@ class _DestinationPageState extends State<DestinationPage> {
                         height: 15,
                       ),
                       Container(
+                        margin: EdgeInsets.only(top: 10, bottom: 10),
                         child: Row(
                           children: [
                             Container(
@@ -87,7 +89,8 @@ class _DestinationPageState extends State<DestinationPage> {
                               child: Row(
                                 children: [
                                   Text(
-                                    "Rating: ${documentData['rating'].toString()}",
+                                    "Rating: ${documentData['rating'].toString()}" ??
+                                        "4.4",
                                     style: TextStyle(
                                         color: Colors.black87,
                                         fontWeight: FontWeight.w800,
@@ -115,17 +118,27 @@ class _DestinationPageState extends State<DestinationPage> {
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
-                            fontSize: 15),
+                            fontSize: 18),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
                       Container(
-                        child: Text(documentData['desc']),
+                        margin: EdgeInsets.only(bottom: 15),
+                        child: Text(
+                          documentData['desc'],
+                          style: TextStyle(),
+                        ),
+                      ),
+                      DirectionList(
+                        directionList: directionList,
+                      ),
+                      SizedBox(
+                        height: 15,
                       ),
                       Container(
                         alignment: Alignment.center,
-                        margin: EdgeInsets.symmetric(vertical: 20),
+                        margin: EdgeInsets.symmetric(vertical: 25),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -137,9 +150,9 @@ class _DestinationPageState extends State<DestinationPage> {
                               child: Container(
                                 alignment: Alignment.center,
                                 padding: EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 22),
-                                height: 130,
-                                width: 185,
+                                    vertical: 8, horizontal: 20),
+                                height: 90,
+                                width: 170,
                                 decoration: BoxDecoration(
                                     color: Color(0xff007580),
                                     borderRadius: BorderRadius.circular(15)),
@@ -165,12 +178,21 @@ class _DestinationPageState extends State<DestinationPage> {
                             ),
                             Spacer(),
                             GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MapView(
+                                        destination: documentData['title']),
+                                  ),
+                                );
+                              },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 4),
+                                    vertical: 8, horizontal: 20),
                                 alignment: Alignment.center,
-                                height: 130,
-                                width: 185,
+                                height: 90,
+                                width: 170,
                                 decoration: BoxDecoration(
                                     color: Color(0xff007580),
                                     borderRadius: BorderRadius.circular(15)),
@@ -184,7 +206,7 @@ class _DestinationPageState extends State<DestinationPage> {
                                       width: 5,
                                     ),
                                     Text(
-                                      "Show Direction",
+                                      "Direction",
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -196,9 +218,6 @@ class _DestinationPageState extends State<DestinationPage> {
                             ),
                           ],
                         ),
-                      ),
-                      DirectionList(
-                        directionList: directionList,
                       ),
                     ],
                   ),

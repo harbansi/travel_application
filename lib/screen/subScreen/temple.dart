@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_application/components/app_bar.dart';
+import 'package:travel_application/constants.dart';
 import 'package:travel_application/screen/subScreen/destinationPage.dart';
 import 'package:travel_application/services/firebase_crud.dart';
 
@@ -15,7 +16,7 @@ class _TempleScreenState extends State<TempleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(""),
+      appBar: appBar("Temple"),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -70,45 +71,53 @@ class _TempleScreenState extends State<TempleScreen> {
                               );
                             },
                             child: Container(
-                              margin: EdgeInsets.only(bottom: 8),
                               decoration: BoxDecoration(
-                                  color: Color(0xffE9F4F9),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                                color: Colors.black12.withBlue(5),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              height: 385.0,
+                              margin: EdgeInsets.symmetric(
+                                vertical: 10.0,
+                                horizontal: 24.0,
+                              ),
+                              child: Stack(
                                 children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(20),
-                                        bottomLeft: Radius.circular(20)),
-                                    child: CachedNetworkImage(
-                                      imageUrl: document.data()['imgURL'][0],
-                                      width: 200,
-                                      height: 210,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
                                   Container(
-                                    width: 198,
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 8),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          document.data()['title'] ?? "title",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18),
-                                        ),
-                                        SizedBox(
-                                          height: 3,
-                                        ),
-                                      ],
+                                    height: 280.0,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(12),
+                                          topRight: Radius.circular(12)),
+                                      child: Image.network(
+                                        document.data()['imgURL'][0],
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
-                                  Spacer(),
+                                  Positioned(
+                                    bottom: 0,
+                                    left: 0,
+                                    right: 0,
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          5, 20, 24, 24),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            width: 300,
+                                            height: 60,
+                                            child: Text(
+                                              document.data()['title'] ??
+                                                  "Title",
+                                              style: constant.boldHeading,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),

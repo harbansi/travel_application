@@ -1,10 +1,9 @@
-import 'dart:html' as html;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_application/components/app_bar.dart';
 import 'package:travel_application/components/drawer.dart';
+import 'package:travel_application/screen/subScreen/destinationPage.dart';
 import 'package:travel_application/services/firebase_crud.dart';
 import 'package:travel_application/constants.dart';
 
@@ -44,32 +43,36 @@ class _BookmarkState extends State<Bookmark> {
                   // Display the data inside a list view
                   return ListView(
                     padding: EdgeInsets.only(
-                      top: 108.0,
+                      top: 90.0,
                       bottom: 12.0,
                     ),
                     children: snapshot.data.docs.map((document) {
                       return GestureDetector(
-                          // onTap: () {
-                          //   Navigator.push(context, MaterialPageRoute(
-                          //     builder: (context) => ProductPage(productId: productId,),
-                          //   ));
-                          // },
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DestinationPage(
+                                    destinationId: document.id,
+                                  ),
+                                ));
+                          },
                           child: FutureBuilder(
                               future: crudMethods.destinationRef
                                   .doc(document.id)
                                   .get(),
-                              builder: (context, bookmarksnap) {
-                                if (bookmarksnap.error) {
+                              builder: (context, productsnap) {
+                                if (productsnap.error) {
                                   return Container(
                                     child: Center(
-                                      child: Text(bookmarksnap.error),
+                                      child: Text(productsnap.error),
                                     ),
                                   );
                                 }
 
-                                if (bookmarksnap.connectionState ==
+                                if (productsnap.connectionState ==
                                     ConnectionState.done) {
-                                  Map _bookmarkMap = bookmarksnap.data.data();
+                                  Map _bookmarkMap = productsnap.data.data();
 
                                   return Container(
                                     decoration: BoxDecoration(
@@ -78,12 +81,23 @@ class _BookmarkState extends State<Bookmark> {
                                     margin: EdgeInsets.symmetric(
                                         vertical: 12, horizontal: 24),
                                     child: Container(
-                                      child: Text("${_bookmarkMap['title']}"),
+                                      child: Container(
+                                        width: 90,
+                                        height: 90,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          child: Image.network(
+                                            "${_bookmarkMap['images'][0]}",
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   );
                                 }
-                                return Container(
-                                  child: Center(
+                                return Scaffold(
+                                  body: Center(
                                     child: CircularProgressIndicator(),
                                   ),
                                 );

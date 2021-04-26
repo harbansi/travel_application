@@ -11,24 +11,57 @@ class _DirectionListState extends State<DirectionList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
-      child: Row(
+      child: Column(
         children: [
           for (var i = 0; i < widget.directionList.length; i++)
             Container(
-              child: Row(
+              child: Column(
                 children: [
-                  // Text(
-                  //   "Distance from Airpot and railway Station",
-                  //   style: TextStyle(color: Colors.black87, fontSize: 15),
-                  // ),
-                  Text(
-                    "${widget.directionList[i]}",
-                    maxLines: 3,
+                  if (i == 0)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Distance from Airpot :",
+                            style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Icon(Icons.flight),
+                        ],
+                      ),
+                    ),
+                  if (i == 1)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Distance from Railway Station :",
+                            style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Icon(Icons.directions_railway_sharp)
+                        ],
+                      ),
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15, left: 8),
+                    child: Column(
+                      children: [
+                        Text(
+                          "${widget.directionList[i]}",
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            )
+            ),
         ],
       ),
     );

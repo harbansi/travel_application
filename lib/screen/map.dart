@@ -7,24 +7,9 @@ import 'dart:math' show cos, sqrt, asin;
 
 import 'package:travel_application/components/app_bar.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Maps',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MapView(),
-    );
-  }
-}
-
 class MapView extends StatefulWidget {
+  final String destination;
+  MapView({this.destination});
   @override
   _MapViewState createState() => _MapViewState();
 }
