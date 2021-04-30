@@ -8,11 +8,11 @@ class CrudMethods {
 
   final Query desRefFeaturedPlaces = FirebaseFirestore.instance
       .collection("destination_collection")
-      .where("type", isEqualTo: "featuredList");
+      .where("filterType", isEqualTo: "featurePlaces");
 
   final Query desRefPopularPlaces = FirebaseFirestore.instance
       .collection("destination_collection")
-      .where("type", isEqualTo: "popularPlaces");
+      .where("filterType", isEqualTo: "popularPlaces");
 
   final Query desRefBeach = FirebaseFirestore.instance
       .collection("destination_collection")
@@ -28,7 +28,7 @@ class CrudMethods {
 
   final Query desRefHeritage = FirebaseFirestore.instance
       .collection("destination_collection")
-      .where("type", isEqualTo: "heritage");
+      .where("type", isEqualTo: "heritage site");
 
   final Query desRefMountain = FirebaseFirestore.instance
       .collection("destination_collection")
@@ -39,7 +39,7 @@ class CrudMethods {
       .where("type", isEqualTo: "wildlife");
 
   final CollectionReference blogRef =
-      FirebaseFirestore.instance.collection("blog");
+      FirebaseFirestore.instance.collection("blogs");
 
   final CollectionReference destinationRef =
       FirebaseFirestore.instance.collection("destination_collection");
@@ -57,6 +57,7 @@ class CrudMethods {
   }
 
   getData() async {
+    // ignore: await_only_futures
     return await FirebaseFirestore.instance.collection("blogs").snapshots();
   }
 

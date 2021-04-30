@@ -250,7 +250,7 @@ class _MapViewState extends State<MapView> {
 
         await _createPolylines(startCoordinates, destinationCoordinates);
 
-        double totalDistance = 0.0;
+        double totalDistance = 100.0;
 
         // Calculating the total distance by adding the distance
         // between small segments

@@ -22,10 +22,10 @@ class _NavigationState extends State<Navigation> {
     //   child: Text("home"),
     // ),
     HomeScreen(),
-    Center(
-      child: Text("bookmark"),
-    ),
-    // Bookmark(),
+    // Center(
+    //   child: Text("bookmark"),
+    // ),
+    Bookmark(),
     BlogPage(),
     MapView(),
     UserPage(),

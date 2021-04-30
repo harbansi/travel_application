@@ -29,64 +29,150 @@ class BlogPage extends StatefulWidget {
 }
 
 class _BlogPageState extends State<BlogPage> {
-  CrudMethods crudMethods = new CrudMethods();
-
-  Stream blogsStream;
-
-  Widget BlogList() {
-    return Container(
-      child: blogsStream != null
-          ? Column(
-              children: <Widget>[
-                StreamBuilder(
-                  stream: blogsStream,
-                  builder: (context, snapshot) {
-                    return ListView.builder(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        itemCount: snapshot.data.docs.length,
-                        physics: ClampingScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return BlogTiles(
-                            authorName:
-                                snapshot.data.docs[index].data()['authorName'],
-                            title: snapshot.data.docs[index].data()["title"],
-                            description:
-                                snapshot.data.docs[index].data()['description'],
-                            imgURL: snapshot.data.docs[index].data()['imgURL'],
-                            date: snapshot.data.docs[index].data()['date'],
-                            time: snapshot.data.docs[index].data()['time'],
-                          );
-                        });
-                  },
-                )
-              ],
-            )
-          : Container(
-              alignment: Alignment.center,
-              child: CircularProgressIndicator(),
-            ),
-    );
-  }
-
-  @override
-  void initState() {
-    crudMethods.getData().then((result) {
-      setState(() {
-        blogsStream = result;
-      });
-    });
-
-    super.initState();
-  }
-
+  CrudMethods crudMethods = CrudMethods();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar("Blog"),
+      drawer: DrawerScreen(),
       body: SingleChildScrollView(
-        child: BlogList(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 6),
+              child: Container(
+                margin: EdgeInsets.only(top: 7),
+                child: FutureBuilder<QuerySnapshot>(
+                  future: crudMethods.blogRef.get(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Scaffold(
+                        body: Center(
+                          child: Text("Error : ,${snapshot.error}"),
+                        ),
+                      );
+                    }
+
+                    //collection data ready to display
+
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return ListView(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        physics: ClampingScrollPhysics(),
+                        children: snapshot.data.docs.map((document) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ShowBLog(
+                                    blogId: document.id,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(bottom: 5, top: 10),
+                              decoration: BoxDecoration(
+                                  color: Colors.black45.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(8),
+                                        bottomLeft: Radius.circular(8)),
+                                    child: Image.network(
+                                      document.data()['imgURL'],
+                                      width: 175,
+                                      height: 160,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 200,
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 5),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          document
+                                                  .data()['title'][0]
+                                                  .toUpperCase() +
+                                              document
+                                                  .data()['title']
+                                                  .substring(1),
+                                          overflow: TextOverflow.ellipsis,
+                                          style: constant.regularHeading,
+                                        ),
+                                        SizedBox(
+                                          height: 3,
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            document
+                                                    .data()['authorName'][0]
+                                                    .toUpperCase() +
+                                                document
+                                                    .data()['authorName']
+                                                    .substring(1),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.black54),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            document.data()['date'],
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.black54),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            document.data()['time'],
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.black54),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      );
+                    }
+                    return Scaffold(
+                      body: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: SingleChildScrollView(
         child: Container(

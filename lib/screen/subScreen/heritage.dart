@@ -89,7 +89,7 @@ class _HeritageScreenState extends State<HeritageScreen> {
                                           topRight: Radius.circular(12)),
                                       child: Image.network(
                                         document.data()['imgURL'][0],
-                                        fit: BoxFit.cover,
+                                        fit: BoxFit.fitWidth,
                                       ),
                                     ),
                                   ),

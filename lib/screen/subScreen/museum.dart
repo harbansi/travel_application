@@ -15,7 +15,7 @@ class _MuseumScreenState extends State<MuseumScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar("Museum"),
+      appBar: appBar("Heritage"),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

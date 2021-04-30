@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:travel_application/components/app_bar.dart';
 import 'package:travel_application/components/drawer.dart';
 import 'package:travel_application/screen/subScreen/destinationPage.dart';
 import 'package:travel_application/services/firebase_crud.dart';
+import 'package:travel_application/constants.dart';
 import 'package:travel_application/constants.dart';
 
 class Bookmark extends StatefulWidget {
@@ -21,13 +23,22 @@ class _BookmarkState extends State<Bookmark> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar("Bookmark"),
+      drawer: DrawerScreen(),
       body: Container(
         child: Stack(
-          children: <Widget>[
+          children: [
+            Container(
+              padding: EdgeInsets.fromLTRB(50, 30, 0, 0),
+              child: Text(
+                "Your Favorite Place are here!!!",
+                style: constant.boldHeading,
+                textAlign: TextAlign.center,
+              ),
+            ),
             FutureBuilder<QuerySnapshot>(
               future: crudMethods.userRef
                   .doc(crudMethods.getUserId())
-                  .collection('bookmark')
+                  .collection("bookmark")
                   .get(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
@@ -43,107 +54,123 @@ class _BookmarkState extends State<Bookmark> {
                   // Display the data inside a list view
                   return ListView(
                     padding: EdgeInsets.only(
-                      top: 90.0,
+                      top: 60.0,
                       bottom: 12.0,
                     ),
                     children: snapshot.data.docs.map((document) {
                       return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DestinationPage(
-                                    destinationId: document.id,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DestinationPage(
+                                  destinationId: document.id,
+                                ),
+                              ));
+                        },
+                        child: FutureBuilder(
+                          future:
+                              crudMethods.destinationRef.doc(document.id).get(),
+                          builder: (context, bookmarksnap) {
+                            if (bookmarksnap.hasError) {
+                              return Scaffold(
+                                body: Container(
+                                  child: Center(
+                                    child: Text('${bookmarksnap.error}'),
                                   ),
-                                ));
-                          },
-                          child: FutureBuilder(
-                              future: crudMethods.destinationRef
-                                  .doc(document.id)
-                                  .get(),
-                              builder: (context, productsnap) {
-                                if (productsnap.error) {
-                                  return Container(
-                                    child: Center(
-                                      child: Text(productsnap.error),
-                                    ),
-                                  );
-                                }
+                                ),
+                              );
+                            }
 
-                                if (productsnap.connectionState ==
-                                    ConnectionState.done) {
-                                  Map _bookmarkMap = productsnap.data.data();
+                            if (bookmarksnap.connectionState ==
+                                ConnectionState.done) {
+                              Map _bookmarkMap = bookmarksnap.data.data();
 
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    margin: EdgeInsets.symmetric(
-                                        vertical: 12, horizontal: 24),
-                                    child: Container(
-                                      child: Container(
-                                        width: 90,
-                                        height: 90,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                          child: Image.network(
-                                            "${_bookmarkMap['images'][0]}",
-                                            fit: BoxFit.cover,
-                                          ),
+                              return Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                margin: EdgeInsets.symmetric(
+                                  vertical: 10.0,
+                                  horizontal: 15.0,
+                                ),
+                                child: Container(
+                                  margin: EdgeInsets.only(bottom: 5, top: 10),
+                                  decoration: BoxDecoration(
+                                      color: Colors.black45.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(8),
+                                            bottomLeft: Radius.circular(8)),
+                                        child: Image.network(
+                                          "${_bookmarkMap['imgURL'][0]}",
+                                          height: 220,
+                                          width: 190,
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
-                                    ),
-                                  );
-                                }
-                                return Scaffold(
-                                  body: Center(
-                                    child: CircularProgressIndicator(),
+                                      Container(
+                                        width: 170,
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              _bookmarkMap['title'][0]
+                                                      .toUpperCase() +
+                                                  _bookmarkMap['title']
+                                                      .substring(1),
+                                              overflow: TextOverflow.ellipsis,
+                                              style: constant.regularHeading,
+                                            ),
+                                            SizedBox(
+                                              height: 3,
+                                            ),
+                                            Container(
+                                              child: Column(
+                                                children: [
+                                                  Text(
+                                                    "Type of Location: ${_bookmarkMap['type'][0]}"
+                                                            .toUpperCase() +
+                                                        _bookmarkMap['type']
+                                                            .substring(1),
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: Colors.black54),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Spacer(),
+                                    ],
                                   ),
-                                );
-                              })
-                          //  Stack(
-                          //   children: [
-                          //     Container(
-                          //       height: 350.0,
-                          //       child: ClipRRect(
-                          //         borderRadius: BorderRadius.circular(12.0),
-                          //         child: Image.network(
-                          //           document.data()['imgURL'][0],
-                          //           fit: BoxFit.cover,
-                          //         ),
-                          //       ),
-                          //     ),
-                          //     Positioned(
-                          //       bottom: 0,
-                          //       left: 0,
-                          //       right: 0,
-                          //       child: Padding(
-                          //         padding: const EdgeInsets.all(24.0),
-                          //         child: Row(
-                          //           mainAxisAlignment:
-                          //               MainAxisAlignment.spaceBetween,
-                          //           children: [
-                          //             Text(
-                          //               document.data()['title'],
-                          //               style: constant.regularHeading,
-                          //             ),
-                          //             Text(
-                          //               "${document.data()['rating']}",
-                          //               style: TextStyle(
-                          //                   fontSize: 18.0,
-                          //                   color:
-                          //                       Theme.of(context).accentColor,
-                          //                   fontWeight: FontWeight.w600),
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //     )
-                          //   ],
-                          // ),
+                                ),
+                              );
+                            }
 
-                          );
+                            return Container(
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          },
+                        ),
+                      );
                     }).toList(),
                   );
                 }

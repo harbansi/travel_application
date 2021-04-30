@@ -8,6 +8,7 @@ import 'package:travel_application/auth/Start.dart';
 import 'package:travel_application/components/app_bar.dart';
 import 'package:travel_application/components/drawer.dart';
 import 'package:travel_application/constants.dart';
+import 'package:travel_application/screen/homePage.dart';
 import 'package:travel_application/screen/subScreen/destinationPage.dart';
 import 'package:travel_application/services/firebase_crud.dart';
 
@@ -53,27 +54,49 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         child: Stack(
           children: <Widget>[
-            Container(
+            Padding(
+              padding: const EdgeInsets.only(left: 60.0),
               child: Text(
-                "find your Best Place",
+                "Find Your Best Place",
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.only(top: 40),
-              child: Text(
-                "Featured Place",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black45,
-                  fontWeight: FontWeight.w600,
-                ),
+            Padding(
+              padding: const EdgeInsets.only(top: 40.0),
+              child: Row(
+                children: [
+                  Text(
+                    "Featured Places",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black45,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) => HomePage()));
+                    },
+                    child: Text(
+                      'See All',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1.0,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-
+            SizedBox(
+              height: 16,
+            ),
             //featured palces container
             FutureBuilder<QuerySnapshot>(
               future: crudMethods.desRefFeaturedPlaces.get(),
@@ -200,12 +223,33 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               margin: EdgeInsets.only(top: 300),
               height: 25,
-              child: Text(
-                "Popular Tours",
-                style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black54,
-                    fontWeight: FontWeight.w600),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    "Popular Tours",
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                    // ignore: deprecated_member_use
+                    // onTap: () {
+                    //   Navigator.push(context,
+                    //       MaterialPageRoute(builder: (context) => HomePage()));
+                    // },
+
+                    child: Text(
+                      'See All',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1.0,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
 

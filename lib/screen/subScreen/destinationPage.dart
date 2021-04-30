@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_application/components/app_bar.dart';
 import 'package:travel_application/components/direction_list.dart';
 import 'package:travel_application/components/image_swipe.dart';
-import 'package:travel_application/constants.dart';
 import 'package:travel_application/screen/map.dart';
 import 'package:travel_application/services/firebase_crud.dart';
 
@@ -127,6 +124,7 @@ class _DestinationPageState extends State<DestinationPage> {
                         margin: EdgeInsets.only(bottom: 15),
                         child: Text(
                           documentData['desc'],
+                          textAlign: TextAlign.justify,
                           style: TextStyle(),
                         ),
                       ),
