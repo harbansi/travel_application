@@ -40,20 +40,21 @@ class _LoginState extends State<Login> {
 
   showError(String errormessage) {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('ERROR'),
-            content: Text(errormessage),
-            actions: <Widget>[
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('OK'))
-            ],
-          );
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ERROR'),
+          content: Text(errormessage),
+          actions: <Widget>[
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'))
+          ],
+        );
+      },
+    );
   }
 
   navigateToSignUp() async {

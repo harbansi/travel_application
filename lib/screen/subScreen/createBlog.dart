@@ -75,8 +75,8 @@ class _CreateBlogState extends State<CreateBlog> {
         "date": currentDate.toString(),
         "time": time
       };
-      crudMethods.addData(blogMap).then((result) {
-        Navigator.pop(context);
+      crudMethods.addData(blogMap).then((result) async {
+        await Navigator.pop(context);
       });
     } else {}
   }

@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:travel_application/components/app_bar.dart';
 import 'package:travel_application/components/drawer.dart';
 import 'package:travel_application/screen/blog.dart';
 import 'package:travel_application/screen/homeScreen.dart';

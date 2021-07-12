@@ -40,11 +40,11 @@ class _BookmarkState extends State<Bookmark> {
                 textAlign: TextAlign.center,
               ),
             ),
-            FutureBuilder<QuerySnapshot>(
-              future: crudMethods.userRef
+            StreamBuilder<QuerySnapshot>(
+              stream: crudMethods.userRef
                   .doc(crudMethods.getUserId())
                   .collection("bookmark")
-                  .get(),
+                  .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Scaffold(
@@ -55,7 +55,7 @@ class _BookmarkState extends State<Bookmark> {
                 }
 
                 // Collection Data ready to display
-                if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData) {
                   // Display the data inside a list view
                   return ListView(
                     padding: EdgeInsets.only(
@@ -73,9 +73,12 @@ class _BookmarkState extends State<Bookmark> {
                                 ),
                               ));
                         },
-                        child: FutureBuilder(
-                          future:
-                              crudMethods.destinationRef.doc(document.id).get(),
+                        child: StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection("destination_collection")
+                              .doc(document.id)
+                              .snapshots(),
+                          // crudMethods.destinationRef.doc(document.id).get(),
                           builder: (context, bookmarksnap) {
                             if (bookmarksnap.hasError) {
                               return Scaffold(
@@ -87,8 +90,7 @@ class _BookmarkState extends State<Bookmark> {
                               );
                             }
 
-                            if (bookmarksnap.connectionState ==
-                                ConnectionState.done) {
+                            if (bookmarksnap.hasData) {
                               Map _bookmarkMap = bookmarksnap.data.data();
 
                               return Container(
