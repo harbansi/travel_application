@@ -37,7 +37,7 @@ class _StartState extends State<Start> {
         throw StateError('Missing Google Auth Token');
       }
     } else
-      throw StateError('Sign in Aborted');
+      throw showError('Sign in Aborted');
   }
 
   checkAuthentification() async {
@@ -47,6 +47,24 @@ class _StartState extends State<Start> {
             context, MaterialPageRoute(builder: (context) => Navigation()));
       }
     });
+  }
+
+  showError(String errormessage) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('ERROR'),
+            content: Text(errormessage),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'))
+            ],
+          );
+        });
   }
 
   navigateToLogin() async {

@@ -20,6 +20,11 @@ class _BookmarkState extends State<Bookmark> {
   //
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar("Bookmark"),
