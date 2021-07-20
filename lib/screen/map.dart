@@ -5,8 +5,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'dart:math' show cos, sqrt, asin;
 
-import 'package:travel_application/components/app_bar.dart';
-
 class MapView extends StatefulWidget {
   final String destination;
   MapView({this.destination});
@@ -28,6 +26,7 @@ class _MapViewState extends State<MapView> {
 
   String _startAddress = '';
   String _destinationAddress = '';
+  String _newAdress = '';
   String _placeDistance;
 
   Set<Marker> markers = {};
@@ -321,6 +320,7 @@ class _MapViewState extends State<MapView> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.destination);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Container(
@@ -440,7 +440,7 @@ class _MapViewState extends State<MapView> {
                           _textField(
                               label: 'Destination',
                               hint: 'Choose destination',
-                              initialValue: '',
+                              initialValue: widget.destination,
                               prefixIcon: Icon(Icons.looks_two),
                               controller: destinationAddressController,
                               width: width,

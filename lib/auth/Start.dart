@@ -43,7 +43,7 @@ class _StartState extends State<Start> {
   checkAuthentification() async {
     _auth.authStateChanges().listen((user) {
       if (user != null) {
-        Navigator.push(
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Navigation()));
       }
     });

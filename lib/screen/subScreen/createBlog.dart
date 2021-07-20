@@ -50,7 +50,10 @@ class _CreateBlogState extends State<CreateBlog> {
     currentDate = formatDate.format(dateKey);
     time = formatTime.format(dateKey);
 
-    if (selectedImage != null) {
+    if (selectedImage != null &&
+        authorName != null &&
+        title != null &&
+        description != null) {
       setState(() {
         _isLoading = true;
       });
@@ -78,7 +81,10 @@ class _CreateBlogState extends State<CreateBlog> {
       crudMethods.addData(blogMap).then((result) async {
         await Navigator.pop(context);
       });
-    } else {}
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Please fill all the fields')));
+    }
   }
 
   @override
